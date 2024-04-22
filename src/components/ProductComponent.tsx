@@ -1,20 +1,28 @@
-const ProductComponent = () => {
+interface ProductProps{
+  title: string;
+  thumbnailUrl: string;
+  price: string;
+}
+const ProductComponent:React.FC<ProductProps> = (props) => {
   return (
-    <div className="col-md-3">
-      <div className="card">
-        <img className="card-img-top" src="..." alt="Card image cap" />
-        <div className="card-body">
-          <h5 className="card-title">Card title</h5>
-          <p className="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
-          <a href="#" className="btn btn-primary">
-            Go somewhere
-          </a>
-        </div>
-      </div>
-      </div>
+    <div className="card">
+    <img
+        src={props.thumbnailUrl}
+        className="card-img-top"
+        alt={props.title}
+        />
+    <div className="card-body">
+        <h5 className="card-title">{props.title}</h5>
+    </div>
+    <ul className="list-group list-group-flush">
+        <li className="list-group-item">Price: Rs {props.price}</li>
+    </ul>
+    <div className="card-body">
+        <a href="#" className="btn btn-primary">
+           Add to Cart
+        </a>
+    </div>
+</div>
   );
 };
 
