@@ -1,13 +1,13 @@
 import MenuComponent from "./layout/MenuComponent"
-import BodyComponent from "./layout/BodyComponent"
 import FooterComponent from "./layout/FooterComponent"
+import MainRoutes from "./routes/MainRoutes"
 
 function App() {
   return (
     <>
       <div>
         <MenuComponent></MenuComponent>
-        <BodyComponent></BodyComponent>
+        <MainRoutes></MainRoutes>
         <FooterComponent></FooterComponent>
       </div>
     </>

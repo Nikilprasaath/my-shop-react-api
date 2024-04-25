@@ -2,6 +2,7 @@ import ProductComponent from "./ProductComponent";
 import image1 from '../assets/images/image_1.png';
 import image2 from '../assets/images/image_2.png';
 import image3 from '../assets/images/image_3.png';
+
 const HomeComponent = () => {
   return (
     <>

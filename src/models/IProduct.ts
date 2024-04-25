@@ -9,3 +9,5 @@ review:Number;
 image:String;
 reviews:String[];
 }
+
+export default IProduct
