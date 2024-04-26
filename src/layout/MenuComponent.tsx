@@ -15,13 +15,13 @@ const MenuComponent = () => {
         navigate("/");
         break;
       case "Product":
-        navigate("/Products");
+        navigate("/products");
         break;
       case "About":
-        navigate("/About");
+        navigate("/about-us");
         break;
       case "Contact":
-        navigate("/Contact");
+        navigate("/contact");
         break;
       default:
         navigate("/");
@@ -86,7 +86,7 @@ const MenuComponent = () => {
                 <Link
                   className="nav-link active"
                   aria-current="page"
-                  to="/about"
+                  to="/about-us"
                 >
                   About Us
                 </Link>

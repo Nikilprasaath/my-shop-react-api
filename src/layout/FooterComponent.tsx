@@ -20,7 +20,7 @@ const FooterComponent: React.FC = () => {
             <Link className="nav-link active" aria-current="page" to="/contact">Contact Us</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link active" aria-current="page" to="/about">About Us</Link>
+            <Link className="nav-link active" aria-current="page" to="/about-us">About Us</Link>
           </li>
         </ul>
         <p>Copyrights {copyrightYear} | {appName}</p>
