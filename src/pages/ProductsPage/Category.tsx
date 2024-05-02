@@ -17,8 +17,8 @@ const Category: React.FC<ISideBarSelection> = ({ callback }) => {
     setCategories(getCategories);
   };
 
-  const handleCallBack = (category:string) => {
-    callback(category)
+  const handleCallBack = () => {
+    callback()
   }
 
   useEffect(() => {
@@ -35,13 +35,13 @@ const Category: React.FC<ISideBarSelection> = ({ callback }) => {
         <hr />
         <ul className="nav nav-link link-dark">
           <li key="All">
-            <Link to="/products" onClick={() => handleCallBack("All")} className="nav-link link-dark">
+            <Link to="/products" onClick={() => handleCallBack()} className="nav-link link-dark">
               All
             </Link>
           </li>
           {categories.map((category: ICategory, index) => (
             <li key={category.name}>
-              <Link to={`/products?category=${category.name}`} onClick={() => handleCallBack(category.name)} className="nav-link link-dark">
+              <Link to={`/products?category=${category.name?.toLowerCase()}`} onClick={() => handleCallBack()} className="nav-link link-dark">
                 {category.name}
               </Link>
             </li>

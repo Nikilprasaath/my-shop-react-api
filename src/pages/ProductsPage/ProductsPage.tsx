@@ -4,25 +4,23 @@ import { ProductService } from "../../services/ProductService";
 import { useEffect, useState } from "react";
 import { IProduct } from "../../models/IProduct";
 import { ICategory } from "../../models/ICategory";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-const productService:ProductService = new ProductService();
+const productService: ProductService = new ProductService();
 const ProductsPage: React.FC = () => {
   const [Products, setProducts] = useState([]);
+  const [sortBy, setSortBy] = useState("Latest")
   const [searchParams] = useSearchParams();
   var category = searchParams.get("category");
   let order = searchParams.get("_order");
 
-  if (category == "men"){
-      console.log("comparison")
-      category = "Men";
-    }
-    else if (category == "women"){
-      category = "Women";
-    }
-    else if (category == "kids"){
-      category = "Kids";
-    }
+  if (category == "men") {
+    category = "Men";
+  } else if (category == "women") {
+    category = "Women";
+  } else if (category == "kids") {
+    category = "Kids";
+  }
 
   const sortOrder: string[] = [
     "Latest",
@@ -32,79 +30,64 @@ const ProductsPage: React.FC = () => {
     "Price - High to Low",
   ];
 
-
-  const getProductDetails = async (_category?: string, _order?: string) => {
-    var products: IProduct
-    if (_category){
-      category = _category
-    }
-    if (_order){
-      order = _order
-    }
-    if (_category == "All"){
-      category = null
-    }
-
-    console.log(category)
-    console.log(order)
+  const getProductDetails = async () => {
     if (category && order) {
-      products = await productService.getProductsByCategorySortOrder(category, order, "maxRetailPrice");
+      products = await productService.getProductsByCategorySortOrder(
+        category,
+        order,
+        "maxRetailPrice"
+      );
+    } else if (category) {
+      var products: IProduct | undefined =
+        await productService.getProductsByCategory(category);
+      ;
+    } else if (order) {
+      var products: IProduct | undefined =
+        await productService.getProductsBySortOrder(order);
+     
+    } else {
+      var products: ICategory | undefined = await productService.getProducts();
     }
-    else if (category){
-      console.log("hello2")
-      console.log(category)
-      var products: IProduct | undefined = await productService.getProductsByCategory(category)
-      console.log(products)
-    }
-    else if (order){
-      var products: IProduct | undefined = await productService.getProductsBySortOrder(order)
-      console.log(products)
-    }
-    else{
-      var products: ICategory | undefined = await productService.getProducts()
-    }
-    
-    setProducts(products)
+
+    setProducts(products);
   };
 
-  const handleCategory = (category:string)=>{
-    console.log("Received Category "+category);
-    getProductDetails(category);
-   }
- 
-   
-  const navigation = useNavigate()
-   
+  const handleCategory = (category: string) => {
+    console.log("Received Category " + category);
+    setSortBy("Latest")
+  };
 
-   const handleSort = ()=>{
+  const navigation = useNavigate();
+
+  const handleSort = () => {
     const order = event?.target.value;
-    var categoryUrl = undefined
+    setSortBy(order)
+
+    var categoryUrl = undefined;
 
     if (category) {
-      categoryUrl = "category="+ category+"&"
+      categoryUrl = "category=" + category.toLowerCase() + "&";
+    } else {
+      categoryUrl = "";
     }
-    else{
-      categoryUrl = ""
+
+    if (order == "Price - Low to High") {
+      console.log(category);
+      console.log("asc");
+      navigation(
+        "/products?" + categoryUrl + "_sort=maxRetailPrice&_order=asc"
+      );
+    } else if (order == "Price - High to Low") {
+      console.log(category);
+      navigation(
+        "/products?" + categoryUrl + "_sort=maxRetailPrice&_order=dsc"
+      );
     }
-    
-    if (order == "Price - Low to High"){
-      console.log(category)
-      console.log("asc")
-      navigation("/products?"+categoryUrl+"_sort=maxRetailPrice&_order=asc")
-      getProductDetails(category, "asc")
-       
-    }
-    else if (order == "Price - High to Low"){
-      console.log(category)
-      navigation("/products?"+categoryUrl+"_sort=maxRetailPrice&_order=dsc")
-      getProductDetails(category, "dsc")
-      
-    }
-   }
+  };
 
   useEffect(() => {
     getProductDetails();
-  }, []);
+  }, [category, order]);
 
   return (
     <>
@@ -122,7 +105,7 @@ const ProductsPage: React.FC = () => {
                 <h4>{Products?.length} products found</h4>
               </div>
               <div className="col">
-                <select onChange={handleSort} style={{ float: "right" }}>
+                <select value={sortBy} onChange={handleSort} style={{ float: "right" }}>
                   {sortOrder.map((sort) => {
                     return (
                       <option key={sort} value={sort}>
@@ -136,9 +119,7 @@ const ProductsPage: React.FC = () => {
             </div>
             <div className="row">
               {Products.map((product: IProduct, index) => (
-                
-                  <ProductComponent {...product}></ProductComponent>
-                
+                <ProductComponent {...product}></ProductComponent>
               ))}
             </div>
           </div>
