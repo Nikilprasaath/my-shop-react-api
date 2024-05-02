@@ -1,101 +1,131 @@
-import axios, { AxiosResponse } from "axios";
 import Category from "./Category";
 import ProductComponent from "../../components/ProductComponent";
 import { ProductService } from "../../services/ProductService";
 import { useEffect, useState } from "react";
-import IProduct from "../../models/IProduct";
-import ICategory from "../../models/ICategories";
-import { Link } from "react-router-dom";
+import { IProduct } from "../../models/IProduct";
+import { ICategory } from "../../models/ICategory";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
+const productService: ProductService = new ProductService();
 const ProductsPage: React.FC = () => {
-  const [Categories, setCategories] = useState([]);
   const [Products, setProducts] = useState([]);
+  const [sortBy, setSortBy] = useState("Latest")
+  const [searchParams] = useSearchParams();
+  var category = searchParams.get("category");
+  let order = searchParams.get("_order");
 
-  const sortByList = []
+  if (category == "men") {
+    category = "Men";
+  } else if (category == "women") {
+    category = "Women";
+  } else if (category == "kids") {
+    category = "Kids";
+  }
 
-  const getCategoryDetails = async () => {
-    try {
-      const response = await axios.get(`http://localhost:3000/categories`);
-      setCategories(response.data);
-    } catch (error) {
-      // Handle errors
-      console.log(error);
-    }
-  };
+  const sortOrder: string[] = [
+    "Latest",
+    "Best Sellers",
+    "Featured Products",
+    "Price - Low to High",
+    "Price - High to Low",
+  ];
 
-  const getProductDetails = async (category?: string) => {
-    try {
-      const response = await axios.get(`http://localhost:3000/products`);
-      setProducts(response.data);
-    } catch (error) {
-      // Handle errors
-      console.log(error);
-    }
-  };
-
-  const onSelectCategories = async (category: string) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3000/products?category=${category}`
+  const getProductDetails = async () => {
+    if (category && order) {
+      products = await productService.getProductsByCategorySortOrder(
+        category,
+        order,
+        "maxRetailPrice"
       );
-      console.log(response.data);
-      setProducts(response.data);
-    } catch (error) {
-      // Handle errors
-      console.log(error);
+    } else if (category) {
+      var products: IProduct | undefined =
+        await productService.getProductsByCategory(category);
+      ;
+    } else if (order) {
+      var products: IProduct | undefined =
+        await productService.getProductsBySortOrder(order);
+     
+    } else {
+      var products: ICategory | undefined = await productService.getProducts();
+    }
+
+    setProducts(products);
+  };
+
+  const handleCategory = (category: string) => {
+    console.log("Received Category " + category);
+    setSortBy("Latest")
+  };
+
+  const navigation = useNavigate();
+
+  const handleSort = () => {
+    const order = event?.target.value;
+    setSortBy(order)
+
+    var categoryUrl = undefined;
+
+    if (category) {
+      categoryUrl = "category=" + category.toLowerCase() + "&";
+    } else {
+      categoryUrl = "";
+    }
+
+    if (order == "Price - Low to High") {
+      console.log(category);
+      console.log("asc");
+      navigation(
+        "/products?" + categoryUrl + "_sort=maxRetailPrice&_order=asc"
+      );
+    } else if (order == "Price - High to Low") {
+      console.log(category);
+      navigation(
+        "/products?" + categoryUrl + "_sort=maxRetailPrice&_order=dsc"
+      );
     }
   };
 
   useEffect(() => {
-    getCategoryDetails();
     getProductDetails();
-  }, []);
+  }, [category, order]);
 
   return (
-    <div className="container text-center">
-      <div className="row">
-        <div className="col-md-1">
-          <h4>Category</h4>
-          <div>
-            <ul className="nav flex-column">
-              <div>
-                <li className="nav item">
-                  <Link to="" onClick={() => getProductDetails()}>
-                    All
-                  </Link>
-                </li>
-              </div>
-              {Categories.map((category: ICategory, index) => (
-                <div>
-                  <li className="nav item">
-                    <Link
-                      to=""
-                      onClick={() => onSelectCategories(category.name)}
-                    >
-                      {category.name}
-                    </Link>
-                  </li>
-                </div>
-              ))}
-            </ul>
-          </div>
+    <>
+      <div>
+        <div>
+          <h2>Products</h2>
         </div>
-        <div className="col">
-          <div className="row">
-            {Products.map((product: IProduct, index) => (
-              <div className="col-md-4">
-                <ProductComponent
-                  key={product.id}
-                  title={product.title}
-                  imgSrc={product.imgSrc}
-                  maxRetailPrice={product.maxRetailPrice}
-                ></ProductComponent>
+        <div className="row">
+          <div className="col-2">
+            <Category callback={handleCategory}></Category>
+          </div>
+          <div className="col">
+            <div className="row">
+              <div className="col" style={{ float: "left" }}>
+                <h4>{Products?.length} products found</h4>
               </div>
-            ))}
+              <div className="col">
+                <select value={sortBy} onChange={handleSort} style={{ float: "right" }}>
+                  {sortOrder.map((sort) => {
+                    return (
+                      <option key={sort} value={sort}>
+                        {sort}
+                      </option>
+                    );
+                  })}
+                </select>
+                <div></div>
+              </div>
+            </div>
+            <div className="row">
+              {Products.map((product: IProduct, index) => (
+                <ProductComponent {...product}></ProductComponent>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

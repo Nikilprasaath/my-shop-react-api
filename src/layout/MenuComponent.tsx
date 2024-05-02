@@ -1,13 +1,16 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router";
+import "bootstrap-icons/icons/facebook.svg";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
-const MenuComponent = () => {
-  //Hooks
-  const navigate = useNavigate();
+interface MenuType {
+  type: string;
+}
 
-  //Variable declarations
-  const shopName: string = "MyShop";
+const MenuComponent: React.FC<MenuType> = ({ type }) => {
   const menuItems: string[] = ["Home", "Product", "About", "Contact"];
-
+  const navigate = useNavigate();
+  const cartContext = useContext(CartContext);
   //Handle routing
   const handleRouting = (menuItem: string) => {
     switch (menuItem) {
@@ -21,7 +24,7 @@ const MenuComponent = () => {
         navigate("/about-us");
         break;
       case "Contact":
-        navigate("/contact");
+        navigate("/contact-us");
         break;
       default:
         navigate("/");
@@ -30,77 +33,42 @@ const MenuComponent = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="container-fluid">
-          <Link className="navbar-brand" to="/">
-            {shopName}
-          </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/">
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/products"
-                >
-                  Products
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/contact"
-                >
-                  Contact Us
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/about-us"
-                >
-                  About Us
-                </Link>
-              </li>
-            </ul>
+      <form className="d-flex" role="search">
+        <input
+          className="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button className="btn btn-outline-success" type="submit">
+          Search
+        </button>
+      </form>
+      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+        {menuItems.map((menu) => {
+          return (
             <button
-              type="button"
-              className="btn btn-warning d-grid gap-2 d-md-flex justify-content-md-end"
+              key={menu}
+              className="nav-link"
+              onClick={() => {
+                handleRouting(menu);
+              }}
             >
-              Cart(0)
+              {menu}
             </button>
-          </div>
-        </div>
-      </nav>
+          );
+        })}
+        {
+
+        }
+      </ul>
+      <button
+            style={{ float: "right" }}
+            type="button"
+            className="btn btn-warning d-grid gap-2 d-md-flex justify-content-md-end"
+          >
+            Cart({cartContext?.products.length})
+          </button>
     </>
   );
 };

@@ -1,4 +1,4 @@
-interface IProduct {
+export interface IProduct {
   id?: string;
   title: string;
   description?: string;
@@ -10,4 +10,12 @@ interface IProduct {
   reviews?: string[];
 }
 
-export default IProduct;
+
+export interface IReview{
+  id:Number;
+  name:string;
+  email:string;
+  phone:string;
+  feedback:string;
+  productRating:Number;
+}
