@@ -1,11 +1,12 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Suspense, lazy } from "react";
 
-import HomeComponent from "../components/HomeComponent"
 import ProductsPage from "../pages/ProductsPage/ProductsPage.tsx"
-import ContactComponent from "../components/ContactComponent"
 import AboutUs from "../pages/AboutUsPage/AboutUs.tsx"
 import History from "../pages/AboutUsPage/History.tsx";
+import ContactPage from "../pages/ContactPage/ContactPage.tsx";
+import HomePage from "../pages/HomePage/HomePage.tsx";
+import ProductDetailsComponent from "../pages/ProductDetailPage/ProductDetailPage.tsx";
 
 const MainRoutes = () => {
     return (
@@ -17,11 +18,11 @@ const MainRoutes = () => {
           ></div>
         }
       >
-    
         <Routes>
-          <Route path='/' element={<HomeComponent />} />
+          <Route path='/' element={<HomePage />} />
           <Route path='/Products' element={<ProductsPage />} />
-          <Route path='/Contact' element={<ContactComponent />} />
+          <Route path="/products/:id" element={<ProductDetailsComponent/>}></Route>
+          <Route path='/contact-us' element={<ContactPage />} />
           <Route path='/about-us' element={<AboutUs />}>
             <Route path='history' element={<History />} />   
           </Route>

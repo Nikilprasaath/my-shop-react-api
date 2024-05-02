@@ -1,59 +1,56 @@
-import ICategory from "../../models/ICategories";
+import { useEffect, useState } from "react";
+import { CategoryService } from "../../services/CategoryService";
+import { Link } from "react-router-dom";
+import { ICategory } from "../../models/ICategory";
 
-const Category: React.FC<ICategory> = (props) => {
-
-  return (
-    // <div>
-    //   <nav>
-    //     <div>
-    //       <div>
-    //         Categories
-    //       </div>
-      
-    //       <div>
-    //         <ul className="nav flex-column">
-    //           <li className="nav item">
-    //             <Link className="nav-link active" aria-current="page" to="/">
-    //               All
-    //             </Link>
-    //           </li>
-    //           <li className="nav item">
-    //             <Link
-    //               className="nav-link"
-    //               aria-current="page"
-    //               to="/products"
-    //             >
-    //               Men
-    //             </Link>
-    //           </li>
-    //           <li className="nav item">
-    //             <Link
-    //               className="nav-link"
-    //               aria-current="page"
-    //               to="/contact"
-    //             >
-    //               Women
-    //             </Link>
-    //           </li>
-    //           <li className="nav item">
-    //             <Link
-    //               className="nav-link"
-    //               aria-current="page"
-    //               to="/about"
-    //             >
-    //               Kids
-    //             </Link>
-    //           </li>
-    //         </ul>
-    //       </div>
-    //     </div>
-    //   </nav>
-    // </div>
-    <div>
-      
-
-    </div>
-  )
+interface ISideBarSelection {
+  callback: any;
 }
 
-export default Category
+const categoryService: CategoryService = new CategoryService();
+
+const Category: React.FC<ISideBarSelection> = ({ callback }) => {
+  const [categories, setCategories] = useState([]);
+
+  const getCategoryDetails = async () => {
+    const getCategories = await categoryService.getCategories();
+    setCategories(getCategories);
+  };
+
+  const handleCallBack = (category:string) => {
+    callback(category)
+  }
+
+  useEffect(() => {
+    getCategoryDetails();
+  }, []);
+
+  return (
+    <>
+      <div
+        className="d-flex flex-column flex-shrink-0 p-3 bg-light"
+        style={{ width: 280 }}
+      >
+        <span className="fs-4">Categories</span>
+        <hr />
+        <ul className="nav nav-link link-dark">
+          <li key="All">
+            <Link to="/products" onClick={() => handleCallBack("All")} className="nav-link link-dark">
+              All
+            </Link>
+          </li>
+          {categories.map((category: ICategory, index) => (
+            <li key={category.name}>
+              <Link to={`/products?category=${category.name}`} onClick={() => handleCallBack(category.name)} className="nav-link link-dark">
+                {category.name}
+              </Link>
+            </li>
+          ))}
+          
+        </ul>
+      </div>
+    </>
+  );
+};
+
+export default Category;

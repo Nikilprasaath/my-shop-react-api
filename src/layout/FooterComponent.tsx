@@ -17,7 +17,7 @@ const FooterComponent: React.FC = () => {
             <Link className="nav-link active" aria-current="page" to="/products">Products</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link active" aria-current="page" to="/contact">Contact Us</Link>
+            <Link className="nav-link active" aria-current="page" to="/contact-us">Contact Us</Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link active" aria-current="page" to="/about-us">About Us</Link>
@@ -30,4 +30,4 @@ const FooterComponent: React.FC = () => {
     );
 }
 
-export default FooterComponent;
+export default FooterComponent
