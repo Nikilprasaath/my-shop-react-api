@@ -1,5 +1,5 @@
-import { Navigate, Route, Routes } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Route, Routes } from "react-router-dom";
+import { Suspense } from "react";
 
 import ProductsPage from "../pages/ProductsPage/ProductsPage.tsx"
 import AboutUs from "../pages/AboutUsPage/AboutUs.tsx"

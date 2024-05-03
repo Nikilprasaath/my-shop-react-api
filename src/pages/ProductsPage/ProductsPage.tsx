@@ -8,7 +8,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 const productService: ProductService = new ProductService();
 const ProductsPage: React.FC = () => {
-  const [Products, setProducts] = useState([]);
+  const [Products, setProducts] = useState<IProduct[]>([]);
   const [sortBy, setSortBy] = useState("Latest")
   const [searchParams] = useSearchParams();
   var category = searchParams.get("category");
@@ -31,6 +31,7 @@ const ProductsPage: React.FC = () => {
   ];
 
   const getProductDetails = async () => {
+    var products: IProduct[] = []
     if (category && order) {
       products = await productService.getProductsByCategorySortOrder(
         category,
@@ -38,15 +39,15 @@ const ProductsPage: React.FC = () => {
         "maxRetailPrice"
       );
     } else if (category) {
-      var products: IProduct | undefined =
+      products =
         await productService.getProductsByCategory(category);
       ;
     } else if (order) {
-      var products: IProduct | undefined =
+      products =
         await productService.getProductsBySortOrder(order);
      
     } else {
-      var products: ICategory | undefined = await productService.getProducts();
+      products = await productService.getProducts();
     }
 
     setProducts(products);
@@ -119,7 +120,7 @@ const ProductsPage: React.FC = () => {
             </div>
             <div className="row">
               {Products.map((product: IProduct, index) => (
-                <ProductComponent {...product}></ProductComponent>
+                <ProductComponent key={index} {...product}></ProductComponent>
               ))}
             </div>
           </div>

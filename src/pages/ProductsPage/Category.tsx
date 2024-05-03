@@ -10,10 +10,10 @@ interface ISideBarSelection {
 const categoryService: CategoryService = new CategoryService();
 
 const Category: React.FC<ISideBarSelection> = ({ callback }) => {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
 
   const getCategoryDetails = async () => {
-    const getCategories = await categoryService.getCategories();
+    const getCategories: ICategory[] = await categoryService.getCategories();
     setCategories(getCategories);
   };
 
@@ -40,7 +40,7 @@ const Category: React.FC<ISideBarSelection> = ({ callback }) => {
             </Link>
           </li>
           {categories.map((category: ICategory, index) => (
-            <li key={category.name}>
+            <li key={index}>
               <Link to={`/products?category=${category.name?.toLowerCase()}`} onClick={() => handleCallBack()} className="nav-link link-dark">
                 {category.name}
               </Link>
