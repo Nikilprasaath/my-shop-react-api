@@ -52,6 +52,7 @@ const HomeComponent = () => {
                 <div className="carousel-caption d-none d-md-block" style={HomeStyles.carouselTextStyles}>
                   <h5 className="text-end">Same Day Delivery !</h5>
                   <p className="text-end">Some representative placeholder content for the third slide.</p>
+                  
                 </div>
               </div>
             </div>
