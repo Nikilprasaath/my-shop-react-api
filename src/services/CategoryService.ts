@@ -1,3 +1,4 @@
+import { ICategory } from "../models/ICategory";
 import { RestClient } from "../utilities/RestClient";
 
 export class CategoryService{
@@ -9,10 +10,18 @@ export class CategoryService{
     }
 
     public async getCategories(){
-        return this.productHttpClient?.getCategories();
+        let result: ICategory[] = [];
+        await this.productHttpClient?.getCategories().then((response) => {
+        result =
+            response !== undefined
+            ? JSON.parse(JSON.stringify(response))
+            : undefined;
+        console.log(result);
+    });
+    return result;
     }
 
-    public async postContact(contactData:IContact){
+    public async postContact(contactData:IContact[]){
         return this.productHttpClient?.postContact(contactData);
     }
 }

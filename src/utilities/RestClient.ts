@@ -11,8 +11,8 @@ export class RestClient {
 
   //To get product details
   //http://localhost:3000/products 
-  public async getProducts():Promise<IProduct[]|undefined> {
-    let product:IProduct[]|undefined = [];
+  public async getProducts():Promise<IProduct[]> {
+    let product:IProduct[] = [];
     try {
       await axios
         .get(`${this.baseURI}/products`)
@@ -31,8 +31,8 @@ export class RestClient {
 
  //To limit only 3 products for Homepage
   //http://localhost:3000/products?_limit=3
-  public async getProductsByLimit(limit: Number):Promise<IProduct[]|undefined> {
-    let product:IProduct[]|undefined = [];
+  public async getProductsByLimit(limit: Number):Promise<IProduct[]> {
+    let product:IProduct[]= [];
     try {
       await axios
         .get(`${this.baseURI}/products?_limit=${limit}`)
@@ -52,12 +52,12 @@ export class RestClient {
 
     //To get product details
   //http://localhost:3000/products/1
-  public async getProduct(id:string):Promise<IProduct|undefined>{
-    let product:IProduct|undefined = undefined;
+  public async getProduct(id:string):Promise<IProduct[]>{
+    let product:IProduct[] = [];
     try {
       await axios
         .get(`${this.baseURI}/products/${id}`)
-        .then((res: AxiosResponse<IProduct>) => {
+        .then((res: AxiosResponse<IProduct[]>) => {
           //console.log(res.data);
           product = res.data;
         })
@@ -72,8 +72,8 @@ export class RestClient {
 
     //To sort products based on maxRetailPrice in ascending order
   //http://localhost:3000/products?_sort=maxRetailPrice&_order=asc
-  public async getProductsByMaxPrice(sort:String = "maxRetailPrice"):Promise<IProduct[]|undefined>{
-    let product:IProduct[]|undefined = [];
+  public async getProductsByMaxPrice(sort:String = "maxRetailPrice"):Promise<IProduct[]>{
+    let product:IProduct[] = [];
     try {
       await axios
         .get(`${this.baseURI}/products?_sort=${sort}`)
@@ -89,8 +89,8 @@ export class RestClient {
     return product;
   }
 
-  public async getProductsByCategory(category:String = "Men"):Promise<IProduct[]|undefined>{
-    let product:IProduct[]|undefined = [];
+  public async getProductsByCategory(category:String = "Men"):Promise<IProduct[]>{
+    let product:IProduct[] = [];
     try {
       await axios
         .get(`${this.baseURI}/products?category=${category}`)
@@ -108,8 +108,8 @@ export class RestClient {
 
   //To sort products based on maxRetailPrice in ascending order
   //http://localhost:3000/products?_sort=maxRetailPrice&_order=asc
-  public async getProductsBySortOrder(sort:String = "maxRetailPrice"):Promise<IProduct[]|undefined>{
-    let product:IProduct[]|undefined = [];
+  public async getProductsBySortOrder(sort:String = "maxRetailPrice"):Promise<IProduct[]>{
+    let product:IProduct[] = [];
     try {
       await axios
         //.get(`${this.baseURI}/products?_sort=${sort}&_order=${order}`)
@@ -132,8 +132,8 @@ return product;
     When sorting by price (asc) is performed in Products of specific category
 	http://localhost:3000/products?category=Women&_sort=maxRetailPrice&_order=asc
   */
-  public async getProductsByCategorySortOrder(ctgry:String="Men", order:String="asc", sort:String="maxRetailPrice"):Promise<IProduct|undefined>{
-    let products:IProduct[]|undefined = [];
+  public async getProductsByCategorySortOrder(ctgry:String="Men", order:String="asc", sort:String="maxRetailPrice"):Promise<IProduct[]>{
+    let products:IProduct[] = [];
     try {
       await axios
         .get(`${this.baseURI}/products?category=${ctgry}&_sort=${sort}&_order=${order}`)
@@ -144,7 +144,7 @@ return product;
         .catch((err) => {
           console.log(err);
         });
-    } catch (exe) {
+    } catch (exe) { 
       console.log(exe);
     }
     return products;
@@ -152,8 +152,8 @@ return product;
 
   //To display categories in sidebar
   //http://localhost:3000/categories
-  public async getCategories():Promise<ICategory|undefined>{
-    let category:ICategory[]|undefined = [];
+  public async getCategories():Promise<ICategory[]>{
+    let category:ICategory[] = [];
     try{
         await axios.get(`${this.baseURI}/categories`)
         .then((res:AxiosResponse<ICategory[]>)=>{
@@ -171,10 +171,10 @@ return product;
 
   //To submit contact form data
   //http://localhost:3000/contact
-  public async postContact(contactInfo:IContact){
+  public async postContact(contactInfo:IContact[]){
     try{
         await axios.post(`${this.baseURI}/contact`,contactInfo)
-        .then((res:AxiosResponse<IContact>)=>{
+        .then((res:AxiosResponse<IContact[]>)=>{
             if(res.status === 201){
                 //
             }
