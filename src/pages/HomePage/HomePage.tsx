@@ -44,11 +44,12 @@ const HomePage: React.FC = () => {
       margin: '130px 0px 0px 10px',
     },
     blockStyling: {
-      margin: '50px 10px 0px 10px',
-      border: 'solid 5px black',
+      margin: '10px',
+      border: 'solid 3px black',
       borderRadius: '10px',
     },
   }
+
   return (
     <>
       <div className="d-flex flex-column mb-3 justify-content-between">

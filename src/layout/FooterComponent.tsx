@@ -1,6 +1,6 @@
 import { faInstagram, faSquareFacebook, faSquareTwitter, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import MenuComponent from "./MenuComponent";
 
 const FooterComponent: React.FC = () => {
   const copyrightYear = new Date().getFullYear();
@@ -16,21 +16,10 @@ const FooterComponent: React.FC = () => {
   return (
     <footer className="text-center">
       <hr />
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/">Home</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/products">Products</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/contact-us">Contact Us</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/about-us">About Us</Link>
-            </li>
+            <MenuComponent></MenuComponent>
             <li className="nav-item"><FontAwesomeIcon icon={faSquareFacebook} size="2x" style={FooterStyles.iconStyling}  /></li>
             <li className="nav-item"><FontAwesomeIcon icon={faSquareTwitter} size="2x" style={FooterStyles.iconStyling}   /></li>
             <li className="nav-item"><FontAwesomeIcon icon={faInstagram} size="2x" style={FooterStyles.iconStyling} /></li>
