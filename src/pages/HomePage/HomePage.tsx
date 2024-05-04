@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleDollarToSlot, faHeadset, faTruckFast } from "@fortawesome/free-solid-svg-icons";
 
 const productService: ProductService = new ProductService();
-const HomePage = () => {
+const HomePage: React.FC = () => {
 
   const navigate = useNavigate();
   const [prds, setPrds] = useState<IProduct[] | undefined>([])
@@ -59,32 +59,39 @@ const HomePage = () => {
                 <img src="https://placehold.co/600x300" className="d-block" alt="..." style={HomeStyles.carouselImgStyles} />
                 <div className="carousel-caption d-none d-md-block" style={HomeStyles.carouselTextStyles}>
                   <h5 className="text-end">Same Day Delivery !</h5>
-                  <p className="text-end">Some representative placeholder content for the first slide.</p>
-                  <button style={{ float: "right" }} className="btn btn-primary" type="button" onClick={handleViewAll}>Browse 1000+ products</button>
+                  <p className="text-end">We have the capabilities and experience to deliver the products you need</p>
+                  <button style={{ float: "right" }} className="btn btn-primary" type="button"
+                    onClick={handleViewAll}>Browse 1000+ products</button>
                 </div>
               </div>
               <div className="carousel-item">
                 <img src="https://placehold.co/600x300" className="d-block" alt="..." style={HomeStyles.carouselImgStyles} />
                 <div className="carousel-caption d-none d-md-block" style={HomeStyles.carouselTextStyles} >
                   <h5 className="text-end">Same Day Delivery !</h5>
-                  <p className="text-end">Some representative placeholder content for the second slide.</p>
-                  <button style={{ float: "right" }} className="btn btn-primary" type="button" onClick={handleViewAll}>Browse 1000+ products</button>
+                  <p className="text-end">We have the capabilities and experience to deliver the products you need</p>
+                  <button style={{ float: "right" }} className="btn btn-primary" type="button"
+                    onClick={handleViewAll}>Browse 1000+ products</button>
                 </div>
               </div>
               <div className="carousel-item">
                 <img src="https://placehold.co/600x300" className="d-block" alt="..." style={HomeStyles.carouselImgStyles} />
                 <div className="carousel-caption d-none d-md-block" style={HomeStyles.carouselTextStyles}>
                   <h5 className="text-end">Same Day Delivery !</h5>
-                  <p className="text-end">Some representative placeholder content for the third slide.</p>
-                  <button style={{ float: "right" }} className="btn btn-primary" type="button" onClick={handleViewAll}>Browse 1000+ products</button>
+                  <p className="text-end">We have the capabilities and experience to deliver the products you need</p>
+                  <button style={{ float: "right" }} className="btn btn-primary" type="button"
+                    onClick={handleViewAll}>Browse 1000+ products</button>
                 </div>
               </div>
             </div>
-            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev" style={HomeStyles.carouselBtnStyles}>
+            <button className="carousel-control-prev" type="button"
+              data-bs-target="#carouselExampleCaptions" data-bs-slide="prev" data-testid="prevCarouselIcon"
+              style={HomeStyles.carouselBtnStyles}>
               <span className="carousel-control-prev-icon" aria-hidden="true"></span>
               <span className="visually-hidden">Previous</span>
             </button>
-            <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next" style={HomeStyles.carouselBtnStyles}>
+            <button className="carousel-control-next" type="button"
+              data-bs-target="#carouselExampleCaptions" data-bs-slide="next"
+              style={HomeStyles.carouselBtnStyles}>
               <span className="carousel-control-next-icon" aria-hidden="true"></span>
               <span className="visually-hidden">Next</span>
             </button>
