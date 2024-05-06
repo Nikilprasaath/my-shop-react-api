@@ -100,11 +100,12 @@ const HomePage: React.FC = () => {
         </div>
         <div className="p-2" style={HomeStyles.blockStyling}>
           <div className="row">
-            {
-              prds?.map((prd) => {
-                return (
-                  <ProductComponent
-                    {...prd}
+          {
+              prds?.map((prd, index)=>{
+                return(
+                  <ProductComponent 
+                  key = {index}
+                  {...prd}               
                   />
                 )
               })

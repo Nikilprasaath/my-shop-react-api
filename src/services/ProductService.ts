@@ -18,37 +18,34 @@ export class ProductService {
         response !== undefined
           ? JSON.parse(JSON.stringify(response))
           : undefined;
-      console.log(result);
     });
     return result;
   }
 
   public async getProduct(id: string) {
-    let result: IProduct | undefined = undefined;
+    let result:IProduct | undefined = undefined;
     await this.productHttpClient?.getProduct(id).then((response) => {
       result =
         response !== undefined
           ? JSON.parse(JSON.stringify(response))
           : undefined;
-      console.log(result);
     });
     return result;
   }
 
   public async getProductsByLimit(limit: Number) {
-    let result: IProduct | undefined = undefined;
+    let result: IProduct[] = [];
     await this.productHttpClient?.getProductsByLimit(limit).then((response) => {
       result =
         response !== undefined
           ? JSON.parse(JSON.stringify(response))
           : undefined;
-      console.log(result);
     });
     return result;
   }
 
   public async getProductsByMaxPrice(sort: String = "maxRetailPrice") {
-    let result: IProduct | undefined = undefined;
+    let result: IProduct[] = [];
     await this.productHttpClient
       ?.getProductsByMaxPrice(sort)
       .then((response) => {
@@ -56,7 +53,6 @@ export class ProductService {
           response !== undefined
             ? JSON.parse(JSON.stringify(response))
             : undefined;
-        console.log(result);
       });
     return result;
   }
@@ -70,7 +66,6 @@ export class ProductService {
           response !== undefined
             ? JSON.parse(JSON.stringify(response))
             : undefined;
-        console.log(result);
       });
     return result;
   }
@@ -84,7 +79,6 @@ export class ProductService {
           response !== undefined
             ? JSON.parse(JSON.stringify(response))
             : undefined;
-        console.log(result);
       });
     return result;
   }
