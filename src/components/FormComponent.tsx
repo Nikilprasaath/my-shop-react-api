@@ -12,10 +12,10 @@ const FormComponent: React.FC<IForm> = ({ type, callback }) => {
     handleSubmit,
   } = useForm();
 
-  const handleFormSubmit = () => {
+  const handleFormSubmit = ( formData: any ) => {
     switch (type) {
       case "contactForm":
-        callback(true);
+        callback(formData);
         console.log("Contact Form submitted...");
         break;
       case "reviewForm":

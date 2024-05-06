@@ -3,11 +3,7 @@ import "bootstrap-icons/icons/facebook.svg";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 
-interface MenuType {
-  type: string;
-}
-
-const MenuComponent: React.FC<MenuType> = ({ type }) => {
+const MenuComponent: React.FC = () => {
   const menuItems: string[] = ["Home", "Product", "About", "Contact"];
   const navigate = useNavigate();
   const cartContext = useContext(CartContext);

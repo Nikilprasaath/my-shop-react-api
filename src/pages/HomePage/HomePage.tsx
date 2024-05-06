@@ -89,9 +89,10 @@ const HomePage = () => {
         <div className="p-2" style={HomeStyles.blockStyling}>
           <div className="row">
           {
-              prds?.map((prd)=>{
+              prds?.map((prd, index)=>{
                 return(
                   <ProductComponent 
+                  key = {index}
                   {...prd}               
                   />
                 )

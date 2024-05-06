@@ -139,7 +139,6 @@ return product;
         .get(`${this.baseURI}/products?category=${ctgry}&_sort=${sort}&_order=${order}`)
         .then((res: AxiosResponse<IProduct[]>) => {
           products = res.data;
-          console.log("Men"+products);
         })
         .catch((err) => {
           console.log(err);
@@ -172,11 +171,13 @@ return product;
   //To submit contact form data
   //http://localhost:3000/contact
   public async postContact(contactInfo:IContact[]){
+    let resStatus: boolean = false
     try{
+        console.log(contactInfo)
         await axios.post(`${this.baseURI}/contact`,contactInfo)
         .then((res:AxiosResponse<IContact[]>)=>{
             if(res.status === 201){
-                //
+              resStatus = true 
             }
         })
         .catch((err) => {
@@ -186,5 +187,6 @@ return product;
     catch(ex){
         console.log(ex);
     }
+    return resStatus  
   }
 }

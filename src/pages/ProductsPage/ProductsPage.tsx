@@ -3,13 +3,12 @@ import ProductComponent from "../../components/ProductComponent";
 import { ProductService } from "../../services/ProductService";
 import { useEffect, useState } from "react";
 import { IProduct } from "../../models/IProduct";
-import { ICategory } from "../../models/ICategory";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const productService: ProductService = new ProductService();
 const ProductsPage: React.FC = () => {
   const [Products, setProducts] = useState<IProduct[]>([]);
-  const [sortBy, setSortBy] = useState("Latest")
+  const [sortBy, setSortBy] = useState("Latest");
   const [searchParams] = useSearchParams();
   var category = searchParams.get("category");
   let order = searchParams.get("_order");
@@ -31,7 +30,7 @@ const ProductsPage: React.FC = () => {
   ];
 
   const getProductDetails = async () => {
-    var products: IProduct[] = []
+    var products: IProduct[] = [];
     if (category && order) {
       products = await productService.getProductsByCategorySortOrder(
         category,
@@ -53,15 +52,14 @@ const ProductsPage: React.FC = () => {
     setProducts(products);
   };
 
-  const handleCategory = (category: string) => {
-    console.log("Received Category " + category);
+  const handleCategory = () => {
     setSortBy("Latest")
   };
 
   const navigation = useNavigate();
 
   const handleSort = () => {
-    const order = event?.target.value;
+    const order = (event?.target as HTMLInputElement).value;
     setSortBy(order)
 
     var categoryUrl = undefined;
@@ -73,13 +71,10 @@ const ProductsPage: React.FC = () => {
     }
 
     if (order == "Price - Low to High") {
-      console.log(category);
-      console.log("asc");
       navigation(
         "/products?" + categoryUrl + "_sort=maxRetailPrice&_order=asc"
       );
     } else if (order == "Price - High to Low") {
-      console.log(category);
       navigation(
         "/products?" + categoryUrl + "_sort=maxRetailPrice&_order=dsc"
       );

@@ -13,7 +13,7 @@ const HeaderComponent = () => {
         </Link>
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <MenuComponent type="header"></MenuComponent>
+            <MenuComponent></MenuComponent>
           </div>
         </div>
       </nav>

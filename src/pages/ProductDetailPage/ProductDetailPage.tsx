@@ -26,7 +26,6 @@ const ProductDetailsComponent: React.FC = () => {
     product =
       id !== undefined ? await productService.getProduct(id) : undefined;
     product !== undefined ? setProduct(product) : null;
-    console.log(product);
   };
 
   useEffect(() => {
@@ -68,7 +67,7 @@ const ProductDetailsComponent: React.FC = () => {
                   <button
                     type="button"
                     className="btn btn-outline-dark"
-                    onClick={()=>handleAddToCart(prd)}                  
+                    onClick={() => handleAddToCart(prd)}
                   >
                     Add To Cart
                   </button>
